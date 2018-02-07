@@ -84,12 +84,20 @@ public class LeagueView {
             System.out.printf("The team %s has been created with %s as coach. %n%n", mTeam.getTeamName(), mTeam.getCoachName());
             break;
           case "add":
+            if(mTeams.getTeamCount() == 0){ 
+              System.out.printf("%nPlease choose \"create\" first to create a team. %n%n");
+             break;
+            }
             // print list of teams and user chooses team
             mTeam = mTeams.getTeamList();
             // prints players and selects user choice
             Arrays.sort(players);
             if(playersLists == null){
               playersLists = new ArrayList<Player>(Arrays.asList(players));
+            }
+            if(playersLists.size()==0){
+              System.out.printf("%nThere are no players left. Please choose another option. %n%n");
+              break;
             }
             index = promptPlayer(playersLists);
             mTeam.addPlayer(playersLists.get(index));
@@ -209,15 +217,15 @@ public class LeagueView {
       for(Player playerSet: playersSets){
         if(playerSet.getHeightInInches()>=35 && playerSet.getHeightInInches()<=40){
           count1++;
-          teamHeight1.put(count1, playerSet.getName());
+          teamHeight1.put(playerSet.hashCode(), playerSet.getName());
         }
         if(playerSet.getHeightInInches()>=41 && playerSet.getHeightInInches()<=46){
           count2++;
-          teamHeight2.put(count2, playerSet.getName());
+          teamHeight2.put(playerSet.hashCode(), playerSet.getName());
         }
         if(playerSet.getHeightInInches()>=47 && playerSet.getHeightInInches()<=50){
           count3++;
-          teamHeight3.put(count3, playerSet.getName());
+          teamHeight3.put(playerSet.hashCode(), playerSet.getName());
         }
       }
       
@@ -252,11 +260,11 @@ public class LeagueView {
       for(Player playerSet: playersSets){
         if (playerSet.isPreviousExperience()==true){
           countExperienced++;
-          experienced.put(countExperienced, playerSet.getName());
+          experienced.put(playerSet.hashCode(), playerSet.getName());
         }
         if(playerSet.isPreviousExperience()==false){
           countInexperienced++;
-          inexperienced.put(countInexperienced, playerSet.getName());
+          inexperienced.put(playerSet.hashCode(), playerSet.getName());
         }
       }
       
